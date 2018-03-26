@@ -1,0 +1,63 @@
+class Solution {
+    
+            static class mystack
+    {
+        int mytop;
+        char stack[];
+        
+        public mystack(int num) {
+            mytop=-1;
+            stack=new char[num];
+        }
+        /*出栈*/
+        void pop()
+        {
+            mytop--;
+        }
+        /*入栈*/
+        void push(char x)
+        {
+            mytop++;
+            stack[mytop]=x;
+            
+        }
+        /*判空*/
+        Boolean isempty()
+        {
+            if(mytop==-1)
+                return true;
+            else
+                return false;
+        }
+        /*取栈顶元素*/
+        char peek()
+        {
+            char peek=stack[mytop];
+            return peek;
+        }
+        /*栈大小*/
+        int size()
+        {
+            return mytop+1;
+        }
+    }
+    
+    public boolean isValid(String s) {
+      int len=s.length();
+      mystack sta=new mystack(len);
+        
+  for(int i = 0; i < len; i++) {
+    if (sta.isempty()) sta.push(s.charAt(i));
+    else {
+      switch(s.charAt(i))
+      { case ')':if(sta.peek()=='('){sta.pop();break;}else sta.push(s.charAt(i));break;
+      case '}':if(sta.peek()=='{'){sta.pop();break;}else sta.push(s.charAt(i));break;
+      case ']':if(sta.peek()=='['){sta.pop();break;}else sta.push(s.charAt(i));break;
+      default:sta.push(s.charAt(i));
+      }
+        
+    }
+  }
+
+  return sta.isempty(); }
+}
