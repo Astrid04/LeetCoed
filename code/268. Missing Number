@@ -1,0 +1,21 @@
+public int missingNumber(int[] nums) {
+        if(nums.length<1)return 0;
+        Arrays.sort(nums);
+        for (int i=0;i<nums.length;i++)
+        {
+            if(i!=nums[i])return i;
+        }
+        return nums.length;
+    }
+
+
+
+
+public int missingNumber(int[] nums) {//faster method *others 不理解异或运算的处理方式；
+        int res = nums.length;
+        for(int i = 0; i < nums.length; i++) {
+            res ^= i;
+            res ^= nums[i];
+        }
+        return res;
+    }
