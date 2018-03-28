@@ -1,0 +1,36 @@
+ public void moveZeroes(int[] nums) {
+        int len=nums.length;
+        int[] tmp=new int[len];
+        int p=0,q=0;
+        for(int i=0;i<len;i++)
+        {
+            if(nums[i]!=0)tmp[p++]=nums[i];
+        }
+       while(q<p)
+       {nums[q]=tmp[q];q++;}
+        while(q<len)
+        {nums[q++]=0;}
+    }
+    
+    
+    public void moveZeroes(int[] array) {//faster method,less space *others
+        int i = 0;
+		int j = 0;
+
+		while(j < array.length){
+			if(array[i] == 0){
+				while(j < array.length && array[j] == 0)
+					j++;
+				if(j == array.length)
+					break;
+				array[i] = array[j];
+				array[j] = 0;
+				i++;
+
+			}else{
+				i++;
+				j++;
+			}
+
+		}
+    }
