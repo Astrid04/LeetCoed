@@ -1,0 +1,37 @@
+public boolean checkPossibility(int[] nums) {
+        int len=nums.length;
+        int time=0;
+        if(len<3)return true;
+        int i=0;
+        while(i<len-1 && time<2)
+        {
+            if(nums[i]>nums[i+1])
+            {   time++;
+             if(i==0)
+             nums[i]=nums[i+1];
+             else if(i==len-2){nums[i+1]=nums[i];i--;}
+             else {if(nums[i]>nums[i+2])nums[i]=nums[i+1];
+             else nums[i+1]=nums[i];
+                 i--;}
+            }
+            else i++;
+        }
+        if(time>=2)return false;
+        else return true;
+    } 
+ 
+ 
+ public boolean checkPossibility(int[] nums) {//思路一样，但是更简洁 *others
+        int count = 0;
+        for(int i = 1;i < nums.length && count <= 1;i++){
+            if(nums[i] < nums[i - 1]){
+                count++;
+                if(i - 2 < 0 || nums[i - 2] < nums[i]){
+                    nums[i - 1] = nums[i];
+                } else {
+                    nums[i] = nums[i - 1];
+                }
+            }
+        }
+        return count <= 1;
+    }
