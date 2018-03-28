@@ -1,0 +1,42 @@
+public int thirdMax(int[] nums) {
+        int len=nums.length;
+        switch(len)
+        {
+            case 0:return 0;
+            case 1:return nums[0];
+            case 2:return (nums[0]>nums[1])?nums[0]:nums[1];
+            default:break;
+        }
+        Arrays.sort(nums);
+        int i=len-2,max=nums[len-1],time=0;
+        while(i>-1 && time<2)
+        {
+            if(nums[i]<max){max=nums[i];time++;}
+            i--;
+        }
+        if(time==2)
+        return max;
+        else return nums[len-1];
+    }
+    
+public int thirdMax(int[] nums) { //this way time is O(n) *me
+        int len=nums.length;
+        switch(len)
+        {
+            case 0:return 0;
+            case 1:return nums[0];
+            case 2:return (nums[0]>nums[1])?nums[0]:nums[1];
+            default:break;
+        }
+        int max1=Integer.MIN_VALUE,max2=Integer.MIN_VALUE,max3=Integer.MIN_VALUE;
+        int time=0;boolean flag=false;
+        for(int i=0;i<len;i++)
+        {
+            if(nums[i]==Integer.MIN_VALUE)flag=true;
+            if(nums[i]>max1){max3=max2;max2=max1;max1=nums[i];time++;continue;}
+            else if(nums[i]<max1 && nums[i]>max2){max3=max2;max2=nums[i];time++;continue;}
+            else if(nums[i]<max2 && nums[i]>max3){max3=nums[i];time++;}
+        }
+        if(time<3&&(!(time==2&&flag)))return max1;
+        return max3;
+    }
