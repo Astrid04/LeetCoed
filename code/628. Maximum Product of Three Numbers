@@ -1,0 +1,49 @@
+public int maximumProduct(int[] nums) {
+        if(nums==null || nums.length<3)return 0;
+        int len=nums.length;
+        Arrays.sort(nums);
+        int j=len-1;
+        int max=0;
+        if(nums[1]>=0) max=nums[j]*nums[j-1]*nums[j-2];
+        else max=Math.max(nums[0]*nums[1]*nums[j],nums[j]*nums[j-1]*nums[j-2]);
+        return max;
+    }
+
+
+public int maximumProduct(int[] nums) {//faster method  * others
+        int max_1 = Integer.MIN_VALUE;
+        int max_2 = Integer.MIN_VALUE;
+        int max_3 = Integer.MIN_VALUE;
+        int last_1 = Integer.MAX_VALUE;
+        int last_2 = Integer.MAX_VALUE;
+        for(int n : nums){
+            if(n > max_3){
+                if(n > max_2){
+                    if(n > max_1){
+                        max_3 = max_2;
+                        max_2 = max_1;
+                        max_1 = n;                                    
+                    }
+                    else{
+                        max_3 = max_2;
+                        max_2 = n;
+                    }
+                }
+                else
+                    max_3 = n;
+            }         
+                if(n < last_2){
+                    if(n < last_1){
+                        last_2 = last_1;
+                        last_1 = n;
+                    }
+                    else{
+                        last_2 = n;
+                   }                    
+                }
+            }
+            
+        
+        return Math.max(max_1*max_2*max_3, last_1*last_2*max_1);
+        
+    }
