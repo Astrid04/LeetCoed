@@ -1,0 +1,84 @@
+public int findUnsortedSubarray(int[] nums) {
+        int len=nums.length;
+        int[] tmp=new int[len];
+        int i=0,j=len-1;
+        boolean startpos=false,endpos=false;
+        int res=0;
+        System.arraycopy(nums,0,tmp,0,len);
+        Arrays.sort(tmp);
+        while(i<len)
+        {
+            if(nums[i]!=tmp[i]){startpos=true;break;}
+            i++;
+        }
+        while(j>-1)
+        {
+            if(nums[j]!=tmp[j]){endpos=true;break;}
+            j--;
+        }
+        if(startpos || endpos)
+        {res=j-i+1;
+        return res;}
+        else return 0;
+    }
+
+
+class Solution {//faster method *others
+    
+    private int findMinIndex(int[] nums, int start, int end) {
+        int minIndex = start;
+        start++;
+        while (start <= end) {
+            if (nums[start] < nums[minIndex]) {
+                minIndex = start;
+            }
+            start++;
+        }
+        return minIndex;
+    }
+
+    private int findMaxIndex(int[] nums, int start, int end) {
+        int maxIndex = start;
+        start++;
+        while (start <= end) {
+            if (nums[start] > nums[maxIndex]) {
+                maxIndex = start;
+            }
+            start++;
+        }
+        return maxIndex;
+    }
+    
+    public int findUnsortedSubarray(int[] nums) {
+        if ((nums == null) || (nums.length == 0)) return 0;
+        int leng = nums.length;
+        
+        int i = 0;
+        while ((i < leng-1) && (nums[i] <= nums[i+1])) {
+            i++;
+        }
+        if (i == leng-1) return 0;
+        
+        int j = leng-1;
+        while ((j > 0) && (nums[j] >= nums[j-1])) {
+            j--;
+        }
+        
+        int minIndex = findMinIndex(nums, i, j);
+        int maxIndex = findMaxIndex(nums, i, j);
+        
+        //System.out.println("i = " + i + "; j = " + j + "; minIndex = " + minIndex + "; maxIndex = " + maxIndex);
+        
+        while ((i>=0) && nums[i] > nums[minIndex]) {
+            i--;
+        }
+        i++;
+        
+        while ((j < leng) && nums[j] < nums[maxIndex]) {
+            j++;
+        }
+        j--;
+        
+        return j - i + 1;
+    }
+}
