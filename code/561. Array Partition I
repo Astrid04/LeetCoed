@@ -1,0 +1,15 @@
+  
+  
+  
+  public int arrayPairSum(int[] nums) {
+       if(nums==null || nums.length==0)return 0;
+        Arrays.sort(nums);
+        int len=nums.length;
+        int sum=0,i=0;
+        while(i<len-1)
+        {
+            sum+=nums[i];
+            i+=2;
+        }
+        return sum;
+    }
