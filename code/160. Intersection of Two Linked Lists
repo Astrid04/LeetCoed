@@ -1,0 +1,16 @@
+public ListNode getIntersectionNode(ListNode headA, ListNode headB) {//看了solution以后学到的，注意while的判断条件是a!=b而不是a.val!=b.val，很聪明！
+    //boundary check
+    if(headA == null || headB == null) return null;
+    
+    ListNode a = headA;
+    ListNode b = headB;
+    
+    //if a & b have different len, then we will stop the loop after second iteration
+    while( a != b){
+    	//for the end of first iteration, we just reset the pointer to the head of another linkedlist
+        a = a == null? headB : a.next;
+        b = b == null? headA : b.next;    
+    }
+    
+    return a;
+}
