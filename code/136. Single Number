@@ -1,0 +1,22 @@
+  public int singleNumber(int[] nums) {
+          HashMap<Integer,Integer> h1=new HashMap<Integer, Integer>();
+        
+        for(int i=0;i<nums.length;i++)
+        {if (h1.containsKey(nums[i])){h1.remove(nums[i]);}
+        else h1.put(nums[i], nums[i]);
+        }
+        Iterator<Integer> a= h1.keySet().iterator();
+        while(a.hasNext())
+        {int key=a.next();
+        return h1.get(key);
+        }
+        return 0;
+    }
+ 
+ 
+ public int singleNumber(int[] nums) {// 还是要多理解^=的用法呀！   *others
+        int result=0;
+        for(int i=0;i<nums.length;i++){
+            result^=nums[i];
+        }
+        return result;
