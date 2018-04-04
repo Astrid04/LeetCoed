@@ -1,0 +1,58 @@
+ public boolean isIsomorphic(String s, String t) {
+        if(s.length()!=t.length() )return false;
+        if(s.length()==0 && t.length()==0)return true;
+        int len=s.length();
+        HashMap<Character,Character> h1=new HashMap<Character,Character>();
+         HashMap<Character,Character> h2=new HashMap<Character,Character>();
+        for(int i=0;i<len;i++)
+        {
+            if(h1.containsKey(s.charAt(i))) 
+            {
+                if(h1.get(s.charAt(i))!=t.charAt(i))return false;
+                  
+            }
+            if(h2.containsKey(t.charAt(i)))
+            {
+                if (h2.get(t.charAt(i))!=s.charAt(i)) return false;
+            }
+            else{h1.put(s.charAt(i),t.charAt(i));h2.put(t.charAt(i),s.charAt(i));}
+        }
+        return true;
+    }
+
+
+public boolean isIsomorphic(String s, String t) {//这个方法针对这道题目是错误的，但我把它留下来因为我觉得如果题目要求有歧义，
+        if(s.length()!=t.length() )return false;//题目判定“addap”"eggep"是true,却判定"adadp""eggep"是false，"addap""eggip"false
+        if(s.length()==0 && t.length()==0)return true;//如果只是从映射的角度，那么两种都该是true
+        int len=s.length();//如果是从结构的角度，我认为“eggip”和"addap"也应该是true，所以保留这个解法
+        int[] pattern1=new int[len];
+        int[] pattern2=new int[len];
+        int count1=0,count2=0;
+        int p1=0,p2=0;
+        for(int i=0;i<len;i++)
+        {
+            count1=1;
+            while(i<len-2)
+            {
+                if(s.charAt(i+1)==s.charAt(i)){i++;count1++;}
+                else break;
+            }
+            pattern1[p1++]=count1;
+        }
+        for(int i=0;i<len;i++)
+        {
+            count2=1;
+            while(i<len-2)
+            {
+                if(t.charAt(i+1)==t.charAt(i)){i++;count2++;}
+                else break;
+            }
+            pattern2[p2++]=count2;
+        }    
+        if(p1!=p2)return false;
+        else
+        {for(int i=0;i<p1;i++)
+        {if(pattern1[i]!=pattern2[i])return false;}
+        }
+        return true;
+    }
