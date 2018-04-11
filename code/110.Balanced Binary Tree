@@ -1,0 +1,29 @@
+class Solution {
+    public boolean isBalanced(TreeNode root) {
+        if(root==null)return true;
+        int c1=maxDepth(root.left);
+        int c2=maxDepth(root.right);
+        if(Math.abs(c2-c1)>1)return false;
+        boolean flag1=isBalanced(root.left);
+        if(flag1==false)return false;
+        boolean flag2=isBalanced(root.right);
+        if(flag2==false)return false;
+        
+        return true;
+        //return(c2-c1);
+    }
+    
+
+    
+     public int maxDepth(TreeNode root) {
+        if(root==null)return 0;
+        int count=1;
+        int c1=0,c2=0;
+        c1=maxDepth(root.left);
+        c2=maxDepth(root.right);
+        if(c1>c2)count+=c1;
+        else count+=c2;
+        return count;
+        
+    }
+}
