@@ -1,0 +1,9 @@
+ public int minDepth(TreeNode root) {
+        if(root==null)return 0;
+        int count=1;
+        int c1=minDepth(root.left);
+        int c2=minDepth(root.right);
+        if(c1==0)return count+c2;
+        if(c2==0)return count+c1;
+        return Math.min(c1,c2)+count;
+    }
