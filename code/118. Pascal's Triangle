@@ -1,0 +1,17 @@
+ public List<List<Integer>> generate(int numRows) {
+         List<List<Integer>> tri = new ArrayList<List<Integer>>();
+        if(numRows==0)return tri;
+        tri.add(new ArrayList<>());
+        tri.get(0).add(1);
+        for(int row=1;row<numRows;row++)
+        {
+            List<Integer> next=new ArrayList<Integer>();
+            List<Integer> tmp= tri.get(row-1);
+            next.add(1);
+            for(int i=1;i<row;i++)
+            {next.add(tmp.get(i-1)+tmp.get(i));}
+            next.add(1);
+            tri.add(next);
+        }
+        return tri;
+    }
