@@ -1,0 +1,8 @@
+ public TreeNode invertTree(TreeNode root) {
+        if(root==null)return null;
+        TreeNode tmpleft=invertTree(root.right);
+        TreeNode tmpright=invertTree(root.left);
+        root.left=tmpleft;
+        root.right=tmpright;
+        return root;
+    }
