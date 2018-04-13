@@ -1,0 +1,51 @@
+ public String reverseVowels(String s) {
+        if(s==null)return s;
+        int len=s.length();
+        int[] num=new int[len];
+        char[] cs=new char[len];
+        int count=0;
+        for(int i=0;i<len;i++)
+        {if(s.charAt(i)=='a' ||s.charAt(i)=='e'||s.charAt(i)=='i'||s.charAt(i)=='o'||s.charAt(i)=='u'||s.charAt(i)=='A'||s.charAt(i)=='E'||s.charAt(i)=='I'||s.charAt(i)=='O'||s.charAt(i)=='U')
+        {num[count]=i;cs[count]=s.charAt(i);count++;}
+        }
+        StringBuilder a=new StringBuilder(s);
+        for(int j=0;j<count;j++)
+        {a.setCharAt(num[j],cs[count-1-j]);}
+        String answer=new String(a);
+        return answer;
+    }
+    
+    
+    
+    public String reverseVowels(String s) {//faster method *others
+        boolean[] arr = new boolean[128];
+        arr['a'] = true;
+        arr['e'] = true;
+        arr['i'] = true;
+        arr['o'] = true;
+        arr['u'] = true;
+        arr['A'] = true;
+        arr['E'] = true;
+        arr['I'] = true;
+        arr['O'] = true;
+        arr['U'] = true;
+        
+        char[] str = s.toCharArray();
+        int l = 0, r = str.length - 1;
+        while (l < r) {
+            while (l < r && !arr[str[l]]) {
+                l++;
+            }
+            while (l < r && !arr[str[r]]) {
+                r--;
+            }
+            if (l < r) {
+                char t = str[l];
+                str[l] = str[r];
+                str[r] = t;
+            }
+            l++;
+            r--;
+        }
+        return String.valueOf(str);
+    }
