@@ -1,0 +1,55 @@
+     public ListNode swapPairs(ListNode head) {我的用时5ms，下面的用时4ms，我觉得我的简洁一点：）
+     if(head==null || head.next==null) return head;
+        ListNode n1=head;
+        ListNode n2=head.next;
+        ListNode n3=swapPairs(head.next.next);
+        n2.next=head;
+        head.next=n3;
+        return n2;
+    }
+   
+   
+   public ListNode swapPairs(ListNode head) {
+                
+        //make the first swap, keep track of new head;
+        
+        if(head == null) {
+            return null;
+        }
+        
+        if(head.next == null) {
+            return head;
+        }
+        
+        ListNode startOfPair = head;
+        ListNode endOfPair = startOfPair.next;
+        ListNode nextPair = endOfPair.next;
+        ListNode prev = null;
+        
+        startOfPair.next = nextPair;
+        endOfPair.next = startOfPair;
+        ListNode newHead = endOfPair;
+        
+        prev = startOfPair;
+        startOfPair = nextPair;
+        
+        while(startOfPair != null && startOfPair.next != null) {
+            
+            endOfPair = startOfPair.next;
+            
+            //save start of the next pair as temp
+            nextPair = endOfPair.next;
+            
+            //swap
+            startOfPair.next = nextPair;
+            endOfPair.next = startOfPair;
+            
+            
+            prev.next = endOfPair;
+            prev = startOfPair;
+            //move forward
+            startOfPair = nextPair;
+        }
+        
+        return newHead;
+    }
