@@ -1,4 +1,4 @@
-     public ListNode swapPairs(ListNode head) {我的用时5ms，下面的用时4ms，我觉得我的简洁一点：）
+     public ListNode swapPairs(ListNode head) {我的用时5ms，下面的用时4ms，我觉得我的简洁一点：）----但是用了O(n) space，而不是constant space
      if(head==null || head.next==null) return head;
         ListNode n1=head;
         ListNode n2=head.next;
