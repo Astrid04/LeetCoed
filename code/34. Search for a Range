@@ -1,0 +1,29 @@
+    public int[] searchRange(int[] nums, int target) {
+        int[] answer=new int[2];
+        answer[0]=-1;answer[1]=-1;
+        int len=nums.length;
+        if(nums==null || len==0)return answer;
+        int lo=0,hi=len-1;
+        while(lo<hi)
+        {
+            int mid=(lo+hi)/2;
+            if(nums[mid]==target){lo=mid;hi=mid;break;}
+            if(nums[mid]<target)lo=mid+1;
+            else hi=mid-1;
+        }
+        if(nums[lo]!=target)return answer;
+        answer[0]=lo;answer[1]=lo;lo--;hi++;
+        while(lo>-1)
+        {
+            if(nums[lo]==target)lo--;
+            else break;
+        }
+        while(hi<len)
+        {
+            if(nums[hi]==target)hi++;
+            else break;
+        }
+        answer[0]=lo+1;
+        answer[1]=hi-1;
+        return answer;
+    }
