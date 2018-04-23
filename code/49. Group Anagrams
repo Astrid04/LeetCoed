@@ -1,0 +1,75 @@
+public List<List<String>> groupAnagrams(String[] strs) {非常简洁的方法！*others
+	if(strs==null || strs.length == 0){
+		return new ArrayList<List<String>>();
+	}
+	HashMap<String, List<String>> map = new HashMap<String, List<String>>();
+	//Arrays.sort(strs);
+	for (String s:strs) {
+		char[] ca = s.toCharArray();
+		Arrays.sort(ca);
+		String keyStr = String.valueOf(ca);
+		if(!map.containsKey(keyStr))
+			map.put(keyStr, new ArrayList<String>());
+		map.get(keyStr).add(s);
+	}
+	
+	/*for(String key: map.keySet()) {//这里其实我不太懂，好像不需要sort也可以？
+		Collections.sort(map.get(key));
+	}*/
+	return new ArrayList<List<String>>(map.values());
+}
+
+
+
+
+
+solution{我的方法超时了:(
+public List<List<String>> groupAnagrams(String[] strs) {
+        int len=strs.length;
+        List<List<String>> answer=new ArrayList<List<String>>();
+        if(strs==null || len==0)return answer;
+        List<String> row=new ArrayList<String>();
+        row.add(strs[0]);
+        answer.add(row);
+        for(int i=1;i<len;i++)
+        {
+            boolean flag=false;
+            for(int j=0;j<answer.size();j++)
+            {
+               flag=isana(answer.get(j).get(0),strs[i]);
+                if(flag==true){answer.get(j).add(strs[i]);break;}
+            }
+            if(flag==false)
+            {
+                List<String> tmp=new ArrayList<String>();
+                tmp.add(strs[i]);
+                answer.add(tmp);
+            }
+        }
+        return answer;
+    }
+   public boolean isana(String a, String b)
+   {
+       HashMap<Character,Integer> ch=new HashMap<Character,Integer>();
+       int len1=a.length();
+       int len2=b.length();
+       if(len1!=len2)return false;
+       for(int i=0;i<len1;i++)
+       {if(ch.containsKey(a.charAt(i))==true){int v=ch.get(a.charAt(i));v++;ch.put(a.charAt(i),v);}
+        else ch.put(a.charAt(i),1);
+       }
+       for(int j=0;j<len2;j++)
+       {
+           if(ch.containsKey(b.charAt(j))==true)
+           {int vv=ch.get(b.charAt(j));
+            if(vv==1){ch.remove(b.charAt(j));}
+            else
+            {
+                vv--;
+                ch.put(b.charAt(j),vv);
+            }
+           }
+           else return false;
+       }
+       return ch.isEmpty();
+   }}
