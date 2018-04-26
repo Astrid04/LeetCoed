@@ -1,0 +1,70 @@
+public ListNode partition(ListNode head, int x) {
+       if(head==null || head.next==null)return head;
+        ListNode n1=head;
+        ListNode n2=head;
+        ListNode n3=head;
+        int i=0;
+        while(n1.next !=null)
+        {
+            n1=n1.next;i++;
+        }
+        i++;
+         System.out.println("iyi: " +i);
+        while(head.val>=x && i>0){n1.next=new ListNode(head.val);n1=n1.next;n1.next=null;head=head.next;i--;}
+        System.out.println(i);
+        n2=head;
+        while(i>0)
+        {
+            if(n2.val<x){n3=n2;n2=n2.next;}
+            else{if(n2==n1)break;n3.next=n2.next;n1.next=new ListNode(n2.val);n1=n1.next;n1.next=null;n2=n2.next;}
+            if(n2==null)break;
+            i--;
+        }
+        return head;
+    }
+
+
+public ListNode partition(ListNode head, int x) {//faster way   *others
+        ListNode p1 = null;
+        ListNode p1_head = null;
+
+        ListNode p2 = null;
+        ListNode p2_head = null;
+        ListNode curr = head;
+
+        while(curr != null) {
+            if(curr.val < x) {
+                if(p1 == null) {
+                    p1 = curr;
+                    p1_head = p1;
+                } else {
+                    p1.next = curr;
+                    p1 = p1.next;
+                }
+            } else {
+                if(p2 == null) {
+                    p2 = curr;
+                    p2_head = p2;
+                } else {
+                    p2.next = curr;
+                    p2 = p2.next;
+                }
+            }
+            curr = curr.next;
+        }
+
+        if (p1 != null) {
+            p1.next = null;
+        }
+        if (p2 != null) {
+            p2.next = null;
+        }
+
+        if(p1_head == null) {
+            return p2_head;
+        } else {
+            p1.next = p2_head;
+            return p1_head;
+        }
+
+    }
