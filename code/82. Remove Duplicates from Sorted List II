@@ -1,0 +1,31 @@
+public ListNode deleteDuplicates(ListNode head) {
+        if(head==null || head.next==null)return head;
+        ListNode n1=head;
+        ListNode n2=head.next;
+        boolean flag=false;
+        ListNode n3=head;
+        while(n1.next!=null)
+        {
+            if(n1.val==n1.next.val && n1==n3)
+            {
+                while(n1.next!=null && n1.val==n1.next.val )n1=n1.next;
+                n3=n1.next;n1=n1.next;head=n1;
+            }
+            else if(n1.val==n1.next.val && n1!=n3)
+            {
+                while(n1.next!=null && n1.val==n1.next.val)n1=n1.next;
+                n3.next=n1.next;n1=n1.next;
+            }
+            else
+            {
+                while(n1.next!=null && n1.val!=n1.next.val){n3=n1;n1=n1.next;}
+                
+            }
+            if(n1==null)break;
+        }
+        
+        
+    
+        
+        return head;
+    }
