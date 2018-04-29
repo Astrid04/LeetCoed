@@ -1,0 +1,27 @@
+    public int addDigits(int num) {
+        if(num<10)return num;
+        int n=0;
+        
+         while(num>0)
+         {
+             if(num>9){n+=(num/10);num=num%10;}
+             else{n+=num;num=0;}
+         }
+            
+        int an=addDigits(n);
+        return an;
+    }
+
+
+
+class Solution {//这个方法没用loop或recursion，但得知原理以后我很生气！！太傻了！
+    public int addDigits(int num) {
+        if(num % 9 ==0)
+            return num == 0 ? 0 : 9;
+        return num % 9;        
+    }
+}
+Any number%9 is equal to the sum of digits (not applicable when number%9==0)
+if number%9==0 then return 0 (when number =0) and return 9 otherwise.
+
+This solution can be converted to a single line solution by using ternary operator for the first if condition.
