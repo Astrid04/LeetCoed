@@ -1,0 +1,21 @@
+  public int findKthLargest(int[] nums, int k) {
+        int len=nums.length;
+        int[] lar=new int[k];
+        for(int i=0;i<k;i++)
+        {
+            lar[i]=Integer.MIN_VALUE;
+        }
+        for(int i=0;i<len;i++)
+        {
+            if(nums[i]<lar[k-1])continue;
+            boolean flag=true;
+            int l=0;
+            while(flag&&l<k)
+            {if(nums[i]>lar[l])
+            {for(int j=k-1;j>l;j--)lar[j]=lar[j-1];
+             lar[l]=nums[i];flag=false;
+            }l++;
+            }
+        }
+        return lar[k-1];
+    }
