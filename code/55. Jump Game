@@ -1,0 +1,42 @@
+ public boolean canJump(int[] nums) {
+        int lastPos = nums.length - 1;
+        for (int i = nums.length - 1; i >= 0; i--) {
+            if (i + nums[i] >= lastPos) {
+                lastPos = i;
+            }
+        }
+        return lastPos == 0;
+    }
+ 
+ public boolean canJump(int[] nums) {//我的思路和贪心法是相似的，但是还是有差距啊：（
+        int len=nums.length;
+        if(len==1)return true;
+       
+        for(int i=len-2;i>-1;i--)
+        {
+            if(nums[i]>=len-1-i)
+            {
+               
+                if(i==0)return true;
+            else if(canreach(nums,i,len))return true;}
+        }
+        return false;
+    }
+    
+     public boolean canreach(int[] nums, int end,int len){
+        if(end<1)return true;       
+         if(end==1){if(nums[0]>0)return true;else return false;}
+       else
+       {
+           for(int i=end-1;i>-1;i--)
+        {
+            if(nums[i]>=end-i)
+            {
+                
+                if(i==0)return true;
+                else if(canreach(nums,i,len))return true;}
+        }
+           return false;
+       }
+     
+     }
