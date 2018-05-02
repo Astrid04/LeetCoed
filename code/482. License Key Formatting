@@ -1,0 +1,16 @@
+   public String licenseKeyFormatting(String S, int K) {
+        String[] s=S.split("-");
+        if(s.length==0) return "";
+        StringBuilder a=new StringBuilder(s[0]);
+        for(int i=1;i<s.length;i++)
+        {a.append(s[i]);}
+        int start=(a.length()%K==0)?a.length()%K+K:a.length()%K;
+        while(start<a.length()-K+1)
+        {
+            a.insert(start,"-");
+            start=start+K+1;
+        }
+        String res=new String(a);
+        res=res.toUpperCase();
+        return res;
+    }
