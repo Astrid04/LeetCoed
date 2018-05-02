@@ -1,0 +1,59 @@
+public int repeatedStringMatch(String A, String B) {
+        
+        int bLen = B.length();
+        int aLen = A.length();
+        if(bLen < aLen){
+            return  A.contains(B)? 1 : (A+A).contains(B) ? 2 : -1;
+        }
+        int firstOccur = B.indexOf(A);
+        if(firstOccur < 0)
+            return (A+A).contains(B)? 2 : -1;
+        
+        if(firstOccur >= aLen)
+            return -1;
+        int k = (bLen - firstOccur)/aLen;
+        if(aLen * k < (bLen - firstOccur)){
+            int newStart = firstOccur+aLen * k;
+            int lenLeft = bLen - newStart;
+            if(!A.substring(0, lenLeft).equals(B.substring(newStart)))
+                return -1;
+            k++;
+        }
+        if(firstOccur > 0){
+            if(!A.substring(aLen - firstOccur).equals(B.substring(0, firstOccur)))
+                return -1;
+            k++;
+        }
+        while(firstOccur+aLen < bLen){
+            if(!A.equals(B.substring(firstOccur, firstOccur+aLen)))
+                return -1;
+            firstOccur+=aLen;
+        }
+        return k;
+    }
+
+
+    public int repeatedStringMatch(String A, String B) {//我的方法超时了
+        int len1=A.length();
+        int len2=B.length();
+        int rep=1;
+        if(len1>2*len2){if(A.contains(B))return 1;else return -1;}
+        StringBuilder a=new StringBuilder(A);
+        if(len1<len2)
+        {rep=len2/len1;
+         for(int i=0;i<rep-1;i++)
+             a.append(A);
+        }
+        
+        while(a.length()<=3*len2)
+        {String an=new String(a);
+            if(an.contains(B))return rep;
+         else
+         {
+             rep++;
+             a.append(A);
+         }
+        }
+        return -1;
+        
+    }
