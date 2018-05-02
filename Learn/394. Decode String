@@ -1,4 +1,4 @@
-  public String decodeString(String s) {
+  public String decodeString(String s) {//非常经典的stack题型~
         String res = "";
         Stack<Integer> countStack = new Stack<>();
         Stack<String> resStack = new Stack<>();
