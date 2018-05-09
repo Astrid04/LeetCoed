@@ -1,0 +1,84 @@
+class Solution {//我的方法
+    public void nextPermutation(int[] nums) {
+        int len=nums.length;
+        if(len<2)return;
+        boolean flag=true;
+        int i=len-1;
+        if( nums[i]>nums[i-1])
+            {int tmp=nums[i];nums[i]=nums[i-1];nums[i-1]=tmp;return;}
+        i--;
+        
+        while(i>0)
+        {
+            
+            if(nums[i]<=nums[i-1])i--;
+            else break;
+            
+        }
+        if(i==0){Arrays.sort(nums);return;}
+        i--;
+        int lo=swapcheck(nums,i+1);
+        int tmp=nums[lo];
+        nums[lo]=nums[i];
+        nums[i]=tmp;
+        Arrays.sort(nums,i+1,len);
+        return;
+        
+    }
+    public int swapcheck(int[] nums, int start)
+    {
+        int tar=nums[start-1];
+        System.out.println(start);
+        int len=nums.length;
+        int lo=start,hi=len-1;
+        int min=start;
+        while(lo<hi)
+        {
+            int mid=(lo+hi)/2;
+            if(nums[mid]<=tar)hi=mid-1;
+            else 
+            {
+                lo=mid+1;
+                if(nums[mid]<nums[min] && nums[mid]>tar){min=mid;}
+               
+            
+            }
+        }
+        if(nums[lo]<nums[min] && nums[lo]>tar)min=lo;
+        return min;
+    }
+}
+
+
+
+
+class Solution {//faster *others
+    public void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+    
+    public void nextPermutation(int[] nums) {
+        int i = nums.length - 1;
+        for(; i > 0; i--) {
+            if(nums[i - 1] < nums[i]) {
+                for(int j =  nums.length - 1; j >= i; j--) {
+                    if(nums[j] > nums[i - 1]) {
+                        swap(nums, i - 1, j);
+                        break;
+                    }
+                }
+                int left = i, right =  nums.length - 1;
+                while(left < right) swap(nums, left++, right--);
+                break;
+            }
+        }
+        
+        if(i == 0) {
+            int left = 0, right =  nums.length - 1;
+            while(left < right) swap(nums, left++, right--);
+        }
+        return;
+    }
+}
