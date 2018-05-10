@@ -1,0 +1,45 @@
+class Solution {
+    public int firstUniqChar(String s) {
+        int len=s.length();
+        if(len<1)return -1;
+        HashMap<Character,Integer> map=new HashMap<Character, Integer>();
+        for(int i=0;i<len;i++)
+        {
+            if(map.containsKey(s.charAt(i))) {int tmp=map.get(s.charAt(i));tmp+=len;map.put(s.charAt(i),tmp);}
+            else map.put(s.charAt(i),i);
+        }
+        Iterator iterator = map.keySet().iterator();   
+        int min=len;
+        while (iterator.hasNext()) {    
+        Object key = iterator.next();    
+             min=Math.min(min,map.get(key)); 
+            }       
+        if(min<len)return min;
+        return -1;
+    }
+}
+
+
+
+ public int firstUniqChar(String s) {//感觉直接用indexof很机智！  *others
+     
+        int resIndex = s.length();
+        
+        if(resIndex == 0)
+            return -1;
+        
+        
+        for(char c = 'a';c<='z';c++){
+            
+            int index = s.indexOf(c);
+            
+            if(index!=-1 && index == s.lastIndexOf(c)){
+                resIndex = Math.min(resIndex,index);
+            }
+            
+        }
+        
+        
+        
+        return resIndex == s.length() ? -1 : resIndex;
+    }
