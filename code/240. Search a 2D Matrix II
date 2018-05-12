@@ -1,0 +1,67 @@
+class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+       // if(matrix==null || matrix[0]==null)return false;
+        int m=matrix.length;if(m==0)return false;
+        int n=matrix[0].length;
+        if(n==0)return false;
+        if(target<matrix[0][0] || target>matrix[m-1][n-1]) return false;
+        int minstart=m-1;
+        int minend=m-1;
+        int lo=0,hi=m-1;
+        while(lo<=hi)
+        {
+            int mid=(lo+hi)/2;
+            if(matrix[mid][0]==target)return true;
+            if(matrix[mid][0]>target){hi=mid-1;if(matrix[mid][0]<matrix[minstart][0] )minstart=mid;}
+            else{lo=mid+1;}
+        }
+        lo=0;hi=m-1;
+        while(lo<=hi)
+        {
+            int mid=(lo+hi)/2;
+            if(matrix[mid][n-1]==target)return true;
+            if(matrix[mid][n-1]>target){hi=mid-1;if(matrix[mid][n-1]<matrix[minend][n-1] && matrix[mid][n-1]>target)minend=mid;}
+            else{lo=mid+1;}
+        }
+        System.out.println(minstart+"  " +minend);
+         int start=minstart;
+            int j=0;
+            while(start>minend-1)
+            {
+                if(matrix[start][j]==target)return true;
+                if(matrix[start][j]>target){start--;continue;}
+                while(matrix[start][j]<target){j++;}
+                
+                if(matrix[start][j]==target)return true;
+                start--;
+            }
+            return false;
+    }
+}
+
+
+
+
+class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) //人家的算法才用了几行，我真是傻。。。*others
+    {
+        if(matrix==null||matrix.length==0)
+           return false; 
+        int m=matrix.length;
+        int n=matrix[0].length;
+        
+        int i=0;
+        int j=n-1;
+        while(i<m && j>=0)
+        {
+            if(matrix[i][j]<target)
+                i++;
+            else if(matrix[i][j]>target)
+                j--;
+            else
+                return true;
+        }
+        return false;
+        
+    }
+}
