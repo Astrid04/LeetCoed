@@ -1,0 +1,102 @@
+ public ListNode mergeKLists(ListNode[] lists) {//这是我自己的方法，但是太慢了
+       int len=lists.length;
+        ListNode[] pts=new ListNode[len];
+        for(int i=0;i<len;i++)
+        {
+            pts[i]=lists[i];
+        }
+        int pos=checkmin(pts,Integer.MIN_VALUE);
+        ListNode head1=new ListNode(0);
+        ListNode head=head1;
+       if(pos==-1)return null;
+       else {head.val=pts[pos].val;pts[pos]=pts[pos].next;pos=checkmin(pts,Integer.MIN_VALUE);}
+        while(pos!=-1)
+        {
+            head.next=new ListNode(pts[pos].val);pts[pos]=pts[pos].next;
+            head=head.next;
+            pos=checkmin(pts,Integer.MIN_VALUE);
+        }
+        return head1;
+    }
+    
+    public int checkmin(ListNode[] pts, int min)
+    {
+        int pos=-1;
+        int max=Integer.MAX_VALUE;
+        for(int i=0;i<pts.length;i++)
+        {
+            if(pts[i]==null)continue;
+            if(pts[i].val==min)return i;
+            if(pts[i].val>min && pts[i].val<=max){max=pts[i].val;pos=i;}
+        }
+        return pos;
+    }
+
+
+class Solution {//最快的解决方案
+    public ListNode mergeKLists(ListNode[] lists) {
+        if(lists.length==0)
+            return null;
+        return merge(0,lists.length-1,lists);
+    }
+    public ListNode merge(int i,int j,ListNode[] lists) {
+        if(j<i)return null;
+        if(i==j)return lists[i];
+        int mid=i+(j-i)/2;
+        ListNode l=merge(i,mid,lists);
+        ListNode r= merge(mid+1,j,lists);
+        ListNode dummy =new ListNode(0);
+        ListNode runner= dummy;
+
+        while(l!=null && r!=null) {
+            if(l.val>r.val) {
+                runner.next=r;
+                r=r.next;
+                runner=runner.next;
+            }
+            else {
+                runner.next=l;
+                l=l.next;
+                runner=runner.next;
+            }
+        }
+        if(l==null && r==null)
+            return dummy.next;
+        if(l==null)
+            runner.next=r;
+        else
+            runner.next=l;
+        return dummy.next;
+    }
+}
+
+
+class Solution {//用到了merge two lists 思想的方法
+   public static ListNode mergeKLists(ListNode[] lists){
+    return partion(lists,0,lists.length-1);
+}
+
+public static ListNode partion(ListNode[] lists,int s,int e){
+    if(s==e)  return lists[s];
+    if(s<e){
+        int q=(s+e)/2;
+        ListNode l1=partion(lists,s,q);
+        ListNode l2=partion(lists,q+1,e);
+        return merge(l1,l2);
+    }else
+        return null;
+}
+
+//This function is from Merge Two Sorted Lists.
+public static ListNode merge(ListNode l1,ListNode l2){
+    if(l1==null) return l2;
+    if(l2==null) return l1;
+    if(l1.val<l2.val){
+        l1.next=merge(l1.next,l2);
+        return l1;
+    }else{
+        l2.next=merge(l1,l2.next);
+        return l2;
+    }
+}
+}
