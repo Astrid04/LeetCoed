@@ -1,0 +1,38 @@
+public class Solution {
+    public RandomListNode copyRandomList(RandomListNode head) {
+        RandomListNode iter=head,store;
+        while(iter!=null)
+        {
+            store=iter.next;
+            RandomListNode tmp=new RandomListNode(iter.label);
+            iter.next=tmp;
+            tmp.next=store;
+            iter=store;
+        }
+        iter=head;
+        while(iter!=null)
+        {
+           
+            if(iter.random!=null)
+            {
+                iter.next.random=iter.random.next;
+            }
+            iter=iter.next.next;
+        }
+        iter=head;
+        RandomListNode newhead=new RandomListNode(0);
+        RandomListNode newh=newhead;
+        while(iter!=null)
+        {
+            store=iter.next.next;
+            
+            
+            newh.next=iter.next;
+            newh=newh.next;
+            
+            iter.next=store;
+            iter=iter.next;
+        }
+        return newhead.next;
+    }
+}
