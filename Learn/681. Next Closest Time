@@ -1,0 +1,81 @@
+这道题是带锁的，题目描述：
+Given a time represented in the format "HH:MM", form the next closest time by reusing the current digits. There is no limit on how many times a digit can be reused.
+
+You may assume the given input string is always valid. For example, "01:34", "12:09" are all valid. "1:34", "12:9" are all invalid.
+
+
+方法一：
+class Solution {//我一开始自己写的方法和这个很类似，但是考虑的没有这个周到，没被accept
+    public String nextClosestTime(String time) {
+        int[] digits=new int[4];
+        digits[0]=time.charAt(0)-'0';
+        digits[1]=time.charAt(1)-'0';
+        digits[2]=time.charAt(3)-'0';
+        digits[3]=time.charAt(4)-'0';
+        int[] original=digits.clone();
+        
+        Arrays.sort(digits);
+        if(digits[3]>original[3]){
+            int i=Arrays.binarySearch(digits,original[3]);
+            while(digits[i]==original[3]) i++;
+            String res=time.substring(0,4)+digits[i];
+            return res;
+        }
+        if(digits[3]>original[2]){
+            int i=Arrays.binarySearch(digits,original[2]);
+            while(digits[i]==original[2]) i++;
+            if(digits[i]<6){
+                String res=time.substring(0,3)+digits[i]+digits[0];
+                return res;
+            }
+        }
+        if(digits[3]>original[1]){
+            int i=Arrays.binarySearch(digits,original[1]);
+            while(digits[i]==original[1]) i++;
+            if(original[0]!=2||(original[0]==2&&digits[i]<4)){
+                String res=time.substring(0,1)+digits[i]+":"+digits[0]+digits[0];
+                return res;
+            }
+        }
+        if(digits[3]>original[0]){
+            int i=Arrays.binarySearch(digits,original[0]);
+            while(digits[i]==original[0]) i++;
+            if(digits[i]<3){
+                String res=""+digits[i]+digits[0]+":"+digits[0]+digits[0];
+                return res;
+            }
+        }
+        return ""+digits[0]+digits[0]+":"+digits[0]+digits[0];
+    }
+}
+
+方法二：
+class Solution {//官方给的解法，速度没有方法一快，方法一是最快的
+    public String nextClosestTime(String time) {
+        int start=60* Integer.parseInt(time.substring(0,2));
+        start += Integer.parseInt(time.substring(3));
+        int ans=start;
+        int min=60*24;
+        Set<Integer> four=new HashSet();
+        for(char c:time.toCharArray())if(c!=':')
+        {
+            four.add(c-'0');
+        }
+        
+        for(int h1:four) for(int h2:four) if(h1*10+h2 <24)
+        {
+            for(int m1: four) for(int m2: four) if(m1*10+m2 <60)
+            {
+                int cur=60*(h1*10+h2)+(m1*10+m2);
+                int diff=Math.floorMod(cur-start,24*60);
+                if(0<diff && diff<min)
+                {
+                    ans=cur;
+                    min=diff;
+                }
+            }
+        }
+        return String.format("%02d:%02d", ans / 60, ans % 60);
+}
+    
+}
