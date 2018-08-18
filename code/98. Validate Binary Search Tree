@@ -1,0 +1,52 @@
+class Solution {//这个方法是速度最快的，我觉得也很简单！
+private TreeNode prev = null;
+    public boolean isValidBST(TreeNode root) {
+        if (root == null) return true;
+        if (!isValidBST(root.left)) return false;
+        if (prev != null && prev.val >= root.val) return false;
+        prev = root;
+        return isValidBST(root.right);
+    }
+    }
+
+
+class Solution {//我的方法，速度比较慢
+    public boolean isValidBST(TreeNode root) {
+        if(root==null || (root.left==null && root.right==null))return true;
+        TreeNode left=root.left;
+        TreeNode right=root.right;
+        int key=root.val;
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        if(left!=null)
+        {if(isValidBST(left))
+            queue.offer(left);
+         else 
+             return false;
+        
+        }
+        while(!queue.isEmpty())
+        {
+            TreeNode tmp=queue.poll();
+            if(tmp.left!=null)queue.offer(tmp.left);
+            if(tmp.right!=null)queue.offer(tmp.right);
+            if(tmp.val>=key)return false;
+        }
+        if(right!=null)
+            {if(isValidBST(right))
+            queue.offer(right);
+         else 
+             return false;
+        
+        }
+            
+        while(!queue.isEmpty())
+        {
+            TreeNode tmp=queue.poll();
+            if(tmp.left!=null)queue.offer(tmp.left);
+            if(tmp.right!=null)queue.offer(tmp.right);
+            if(tmp.val<=key)return false;
+        }
+        return true;
+    }
+}
+
