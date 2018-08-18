@@ -1,6 +1,6 @@
 这道题真的超级难，这个算法我在纸上写了很久才推演出来，需要重点学习这道题！
 
-public class Solution {
+public class Solution {//这个算是容易看懂的
 public String minWindow(String s, String t) {
     if(s == null || s.length() < t.length() || s.length() == 0){
         return "";
@@ -45,3 +45,69 @@ public String minWindow(String s, String t) {
     
     return s.substring(minLeft,minLeft+minLen);
 }}
+
+
+class Solution {//理解了上面那个再看这个，两个异曲同工，只不过把hashtable换成 int数组以后速度提升了很多
+    public String minWindow(String s, String t) {
+        // Count occurrences of each character in `t`
+        int[] counts = new int[128];    // ascii ranges 0-127 inclusive
+        for (char c : t.toCharArray()) {
+            counts[c]++;
+        }
+
+        int left = 0;   // left pointer
+        int minLeft = left;
+        int minLen = s.length() + 1;
+        int nCharNotSeen = t.length();
+        for (int right = 0; right < s.length(); right++) {
+            char cRight = s.charAt(right);
+            if (counts[cRight]-- > 0) {
+                nCharNotSeen--;
+            }
+
+            while (nCharNotSeen == 0) { // found a solution, shrink window by moving `left`
+                int newLen = right - left + 1;
+                if (newLen < minLen) {  // found a shorter solution!
+                    minLeft = left;
+                    minLen = newLen;
+                }
+                // shrink window by moving `left`
+                char cLeft = s.charAt(left);
+                if (counts[cLeft]++ >= 0) {
+                    nCharNotSeen++;
+                }
+                left++;
+            }
+        }
+
+        // Did we find a solution?
+        return minLen > s.length() ? "" : s.substring(minLeft, minLeft + minLen);
+    }
+}
+
+
+int findSubstring(string s){//最后再看这个，这个是这一类型求substring得题目的模板解答，可以用它来套不同的题目要求
+        vector<int> map(128,0);
+        int counter; // check whether the substring is valid
+        int begin=0, end=0; //two pointers, one point to tail and one  head
+        int d; //the length of substring
+
+        for() { /* initialize the hash map here */ }
+
+        while(end<s.size()){
+
+            if(map[s[end++]]-- ?){  /* modify counter here */ }
+
+            while(/* counter condition */){ 
+                 
+                 /* update d here if finding minimum*/
+
+                //increase begin to make it invalid/valid again
+                
+                if(map[s[begin++]]++ ?){ /*modify counter here*/ }
+            }  
+
+            /* update d here if finding maximum*/
+        }
+        return d;
+  }
